@@ -4,5 +4,7 @@ module.exports = {
   type: 0,
   execute(refs, msg, args) {
 		refs.reload();
+		msg.channel.send("reload complete! :)");
+
   }
 }

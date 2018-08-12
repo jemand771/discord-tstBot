@@ -2,7 +2,8 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 var config = require('./config.json');
 const fs = require('fs');
-var commands, smemes;
+path=require("path");
+let commands, smemes, refs;
 
 function reloadFiles() {
 //TODO !reload does not work properly
@@ -10,8 +11,12 @@ function reloadFiles() {
   const cmdFiles = fs.readdirSync('./cmd');
   commands = new Discord.Collection();
   for (const file of cmdFiles) {
-    let cmd = require(`./cmd/${file}`);
+		let filename = path.resolve(`./cmd/${file}`);
+		delete require.cache[filename];
+		let cmd = require(`./cmd/${file}`);
+		commands.set(cmd.name, undefined);
     commands.set(cmd.name, cmd);
+		// console.log(commands.get(cmd.name).execute.toString());
   }
 
   const smemeFiles = fs.readdirSync('./smemes');
@@ -23,16 +28,18 @@ function reloadFiles() {
 	console.log("OK!");
 	console.log(commands.size + " commands");
 	console.log(smemes.size + " smemes");
+
+	refs = {
+	  "config": config,
+		"commands": commands,
+	  "client": client,
+	  "smemes": smemes,
+		"reload": reloadFiles
+	};
 }
 reloadFiles();
 
-const refs = {
-  "config": config,
-  "client": client,
-  "commands": commands,
-  "smemes": smemes,
-	"reload": reloadFiles
-};
+
 
 client.on('ready', () => {
   console.log("OK!");
@@ -56,7 +63,7 @@ client.on('message', msg => {
     cmd.execute(refs, msg, args);
 
   } catch (error) {
-    msg.reply('an error has occurred, please notify bot developers.');
+    msg.reply('an error has occurred, please notify bot developers. (@jemand771#1132)');
     console.log(error);
   }
 
