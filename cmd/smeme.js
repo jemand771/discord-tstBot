@@ -19,7 +19,7 @@ module.exports = {
         voiceChannel.join().then(connection => {
 
           console.log("now playing " + args[0]);
-          const dispatcher = connection.playFile('C:\\Users\\Willy\\Documents\\atom\\discordTstBot\\' + smeme);
+          const dispatcher = connection.playFile(smeme);
           dispatcher.on("end", end => {
 						process.stdout.write("done playing. ");
             setTimeout(function() {
