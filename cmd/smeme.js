@@ -16,6 +16,7 @@ module.exports = {
       let smeme = refs.smemes.get(args[0]);
       if (msg.member.voiceChannel) {
         var voiceChannel = msg.member.voiceChannel;
+        msg.delete();
         voiceChannel.join().then(connection => {
 
           console.log("now playing " + args[0]);
