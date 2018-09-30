@@ -1,6 +1,6 @@
 const Permissions = require("discord.js/src/util/Permissions");
 module.exports = {
-  name: 'smeme',
+  name: 'sme',
   description: 'play a meme',
   type: 0,
   execute(refs, msg, args) {
