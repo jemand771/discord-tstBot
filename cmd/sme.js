@@ -1,6 +1,6 @@
 const Permissions = require("discord.js/src/util/Permissions");
 module.exports = {
-  name: 'smeme',
+  name: 'sme',
   description: 'play a meme',
   type: 0,
   execute(refs, msg, args) {
@@ -16,10 +16,11 @@ module.exports = {
       let smeme = refs.smemes.get(args[0]);
       if (msg.member.voiceChannel) {
         var voiceChannel = msg.member.voiceChannel;
+        msg.delete();
         voiceChannel.join().then(connection => {
 
           console.log("now playing " + args[0]);
-          const dispatcher = connection.playFile('C:\\Users\\Willy\\Documents\\atom\\discordTstBot\\' + smeme);
+          const dispatcher = connection.playFile(smeme);
           dispatcher.on("end", end => {
 						process.stdout.write("done playing. ");
             setTimeout(function() {
